@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>전체 사원 조회</title>
+<script th:inline="javascript">
+//타임리프에 대한 내용이 들어간다는 선언
+	function getCtx(){
+		return /*[[${#httpServletRequest.getContextPath()}]]*/''; 
+		//타임리프주석
+		//타임리프는 페이지를 형성할 때 컴파일 됨
+		//그래서 일부러 주석처리하고 parsing하게 만듦 String이면 ''붙여주기ㅇㅇ
+	}
+</script>
+</head>
+<body>
+	<div>
+		<!-- 서버가 보낸 데이터들을 값으로 받아야 하는 것들에 대해서 th태그 적용함ㅇㅇ == 일부분이 서버가 주는거다 th사용ㅇㅇ-->
+		<button type="button" th:onclick="|location.href='@{/empInsert}'|" th:text='등록'></button>
+		<table>
+			<thead>
+				<tr>
+					<th>employee_id</th>
+					<th>first_name</th>
+					<th>last_name</th>
+					<th>job_id</th>
+					<th>hire_date</th>
+					<th>hire_date2</th>
+				</tr>
+			</thead>
+			<tbody>
+			<!-- 반복문을 사용하려면 block태그를 만들어 여기서 each하는 게 나음 더 직관적임ㅇㅇ -->
+			<!-- ||template문법, ``랑 같음ㅇㅇ, 정해진 템플릿 안에 타임리프 부분이 들어가도록 그어준거임.javascript형태로인식하는게아니고ㅇㅇ -->
+			<!-- @링크 경로를? 만드는데? 메소드형식임? @{경로(키=value,..반복)} => 경로?키=value&키=value get방식 post는 키, 값xx -->
+				<!-- th:each="임시변수 : 서버가보내준값" -->
+				<!-- th:each="임시변수, 임시변수2(=상태변수, 몇번째인지셀수있음, 접근가능ㅇㅇ) : 서버가보내준값 -->
+				<th:block th:each="empInfo, stat : ${empList}" >
+					<tr th:id="${stat.index}" 
+						th:onclick="|location.href='@{/empInfo(employeeId=${empInfo.employeeId})}'|">
+						<td th:text="${empInfo.employeeId}"/>
+						<td th:text="${empInfo.firstName}" />
+						<td th:text="${empInfo.lastName}" />
+						<td>[[${empInfo.jobId}]]</td>
+						<td>[[${#dates.format(empInfo.hireDate, 'yyyy년MM월dd일')}]]</td>
+						<td th:text="${#dates.format(empInfo.hireDate, 'yyyy-MM-dd')}"/>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>사원 등록</title>
+</head>
+<body>
+	<!-- th:object 로 해당 정보를 담아줄 객체를 선언해주면 각 input태그에 별도의 name속성 선언 안해도 됨, 비어있는 매핑값을 매핑시킴ㅇㅇ-->
+	<!-- 객체에 매핑되어 들어감ㅇㅇ th:field=?? -->
+	<form th:action="@{/empInsert}" method="POST" th:object="${empVO}">
+		<div>
+			<label id="empId">사원번호</label>
+			<input type="text" id="empId" th:field="*{employeeId}">
+		</div>
+		<div>
+			<label id="name">이름</label>
+			<input type="text" id="name"  th:field="*{lastName}">
+		</div>
+		<div>
+			<label id="email">이메일</label>
+			<input type="text" id="email"  th:field="*{email}">
+		</div>
+		<div>
+			<label id="hireDate">입사일</label>
+			<input type="text" id="hireDate"  th:field="*{hireDate}">
+		</div>
+		<div>
+			<label id="job">업무</label>
+			<input type="text" id="job"  th:field="*{jobId}">
+		</div>
+		<div>
+			<button type="submit">등록</button>
+			<button type="button">취소</button>
+		</div>
+	</form>
+</body>
+</html>
