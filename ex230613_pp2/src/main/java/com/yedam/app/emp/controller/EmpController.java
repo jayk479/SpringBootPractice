@@ -26,7 +26,7 @@ public class EmpController {
 	@GetMapping("empInfo")
 	public String empInfo(EmpVO empVO, Model model) {
 		model.addAttribute("empinfo", empService.getEmpInfo(empVO));
-		return "empinfo";
+		return "empInfo";
 	}
 	
 	//등록 페이지
